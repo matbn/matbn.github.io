@@ -118,14 +118,14 @@
           >
             <button
               id="lang-en"
-              class="lang-button text-sm font-semibold hover:text-white transition-colors"
+              class="lang-button text-sm font-semibold hover:text-indigo-400 transition-colors"
             >
               EN
             </button>
             <span class="text-gray-500">/</span>
             <button
               id="lang-pt"
-              class="lang-button text-sm font-semibold hover:text-white transition-colors"
+              class="lang-button text-sm font-semibold hover:text-indigo-400 transition-colors"
             >
               PT
             </button>
@@ -404,6 +404,8 @@
                   "This project was carried out for one of the largest home appliance manufacturers in the country. The demand arose due to lost production time to teach new employees, which requires stopping the process of a machinery, in addition to trying to reduce the chances of potential problems that could occur for both the machinery and the employee in training. The project was carried out using Unreal Engine 4, and tried to be as faithful as possible to the machinery used in a steel sheet manufacturing process. The simulator also contains gamification elements to help employees engage with training.",
                 image: "https://placehold.co/600x400/1e1b4b/ffffff?text=VR+Sim",
                 tags: ["Unreal", "Blueprint", "C++", "Simulation", "Android"],
+                liveUrl: "",
+                repoUrl: ""
               },
               {
                 id: 2,
@@ -414,6 +416,8 @@
                 image:
                   "https://placehold.co/600x400/4c1d95/ffffff?text=Indie+Game",
                 tags: ["Unity", "C#", "Virtual Reality", "Android"],
+                liveUrl: "",
+                repoUrl: ""
               },
               {
                 id: 3,
@@ -429,6 +433,8 @@
                   "AI",
                   "Computer Vision",
                 ],
+                liveUrl: "",
+                repoUrl: ""
               },
               {
                 id: 4,
@@ -439,6 +445,8 @@
                 image:
                   "https://placehold.co/600x400/6d28d9/ffffff?text=Multiplayer",
                 tags: ["Unity", "C#"],
+                liveUrl: "",
+                repoUrl: ""
               },
             ],
           },
@@ -483,6 +491,8 @@
                   "Este projeto foi realizado para um dos maiores fabricantes de eletrodomésticos do país. A demanda surgiu devido ao tempo de produção perdido para ensinar novos funcionários, o que exige a parada do processo de uma máquina, além de tentar reduzir as chances de potenciais problemas que poderiam ocorrer tanto para a máquina quanto para o funcionário em treinamento. O projeto foi realizado utilizando Unreal Engine 4, buscando ser o mais fiel possível à máquina utilizada em um processo de fabricação de chapas de aço. O simulador também contém elementos de gamificação para ajudar os funcionários a se engajarem com o treinamento.",
                 image: "https://placehold.co/600x400/1e1b4b/ffffff?text=VR+Sim",
                 tags: ["Unreal", "Blueprint", "C++", "Simulação", "Android"],
+                liveUrl: "",
+                repoUrl: ""
               },
               {
                 id: 2,
@@ -493,6 +503,8 @@
                 image:
                   "https://placehold.co/600x400/4c1d95/ffffff?text=Indie+Game",
                 tags: ["Unity", "C#", "Realidade Virtual", "Android"],
+                liveUrl: "",
+                repoUrl: ""
               },
               {
                 id: 3,
@@ -508,6 +520,8 @@
                   "IA",
                   "Visão Computacional",
                 ],
+                liveUrl: "",
+                repoUrl: ""
               },
               {
                 id: 4,
@@ -518,6 +532,8 @@
                 image:
                   "https://placehold.co/600x400/6d28d9/ffffff?text=Multiplayer",
                 tags: ["Unity", "C#"],
+                liveUrl: "",
+                repoUrl: ""
               },
             ],
           },
@@ -533,11 +549,23 @@
           localStorage.setItem("language", lang);
 
           document.querySelectorAll("[data-key]").forEach((element) => {
+            // Não sobrescrever o conteúdo do grid de projetos
+            if (element.id === "projects-grid") return;
             const key = element.dataset.key;
             if (translations[lang][key]) {
               element.innerHTML = translations[lang][key];
             }
           });
+
+          // Atualizar manualmente título e subtítulo dos projetos
+          const projectsTitle = document.querySelector('[data-key="projectsTitle"]');
+          if (projectsTitle) {
+            projectsTitle.innerHTML = translations[lang]["projectsTitle"];
+          }
+          const projectsSubtitle = document.querySelector('[data-key="projectsSubtitle"]');
+          if (projectsSubtitle) {
+            projectsSubtitle.innerHTML = translations[lang]["projectsSubtitle"];
+          }
 
           document.documentElement.lang = lang === "en" ? "en-US" : "pt-BR";
 
@@ -553,13 +581,21 @@
         };
 
         const renderProjects = () => {
+          // Salvar os elementos existentes para preservar as animações
+          const existingCards = Array.from(projectsGrid.children);
           projectsGrid.innerHTML = "";
           const currentProjects = translations[currentLang].projects;
+          
           currentProjects.forEach((project, index) => {
             const projectCard = document.createElement("div");
-            projectCard.className =
-              "bg-gray-900 rounded-xl overflow-hidden group animate-on-scroll";
-            projectCard.style.transitionDelay = `${index * 100}ms`;
+            // Se existir um card anterior, copiar suas classes de animação
+            if (existingCards[index]) {
+              projectCard.className = existingCards[index].className;
+              projectCard.style.transitionDelay = existingCards[index].style.transitionDelay;
+            } else {
+              projectCard.className = "bg-gray-900 rounded-xl overflow-hidden group animate-on-scroll";
+              projectCard.style.transitionDelay = `${index * 100}ms`;
+            }
             projectCard.innerHTML = `
                         <div class="overflow-hidden">
                             <img src="${project.image}" alt="${project.title}" class="w-full h-60 object-cover group-hover:scale-110 transition-transform duration-500">
@@ -588,40 +624,34 @@
           );
           if (!project) return;
 
+
+          // Renderizar botões apenas se os links existirem
+          let modalButtons = '';
+          if (project.liveUrl) {
+            modalButtons += `<a href="${project.liveUrl}" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">${translations[currentLang].modalLiveButton}</a>`;
+          }
+          if (project.repoUrl) {
+            modalButtons += `<a href="${project.repoUrl}" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">${translations[currentLang].modalRepoButton}</a>`;
+          }
+
           modalContent.innerHTML = `
-                    <button id="modal-close-button-inner" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl z-10">
-                        <i class='bx bx-x'></i>
-                    </button>
-                    <img src="${project.image}" alt="${
-            project.title
-          }" class="w-full h-64 object-cover rounded-t-lg mb-6">
-                    <div class="px-2">
-                        <h2 class="text-3xl font-bold mb-2">${
-                          project.title
-                        }</h2>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            ${project.tags
-                              .map(
-                                (tag) =>
-                                  `<span class="bg-gray-800 text-indigo-300 text-xs font-medium px-3 py-1 rounded-full">${tag}</span>`
-                              )
-                              .join("")}
-                        </div>
-                        <p class="text-gray-400 mb-6">${project.description}</p>
-                        <div class="flex gap-4">
-                            <a href="${
-                              project.liveUrl
-                            }" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">${
-            translations[currentLang].modalLiveButton
-          }</a>
-                            <a href="${
-                              project.repoUrl
-                            }" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">${
-            translations[currentLang].modalRepoButton
-          }</a>
-                        </div>
-                    </div>
-                `;
+            <button id="modal-close-button-inner" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl z-10">
+                <i class='bx bx-x'></i>
+            </button>
+            <img src="${project.image}" alt="${project.title}" class="w-full h-64 object-cover rounded-t-lg mb-6">
+            <div class="px-2">
+                <h2 class="text-3xl font-bold mb-2">${project.title}</h2>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    ${project.tags.map(
+                      (tag) => `<span class="bg-gray-800 text-indigo-300 text-xs font-medium px-3 py-1 rounded-full">${tag}</span>`
+                    ).join("")}
+                </div>
+                <p class="text-gray-400 mb-6">${project.description}</p>
+                <div class="flex gap-4">
+                  ${modalButtons}
+                </div>
+            </div>
+          `;
 
           modal.classList.remove("opacity-0", "pointer-events-none");
           modalContent.classList.remove("scale-95");
@@ -667,6 +697,13 @@
 
         // --- Initial Load ---
         setLanguage(currentLang);
+
+        // Sempre renderizar projetos ao navegar para a seção de projetos
+        window.addEventListener('hashchange', () => {
+          if (window.location.hash === '#projects') {
+            renderProjects();
+          }
+        });
 
         // --- Animation Observer ---
         const animatedElements =
