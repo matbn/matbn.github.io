@@ -79,6 +79,11 @@
         color: #c026d3;
         font-weight: 700;
       }
+      
+      /* Estilo para a miniatura da galeria ativa */
+      .gallery-thumbnail.active {
+        border-color: #4f46e5;
+      }
     </style>
   </head>
 
@@ -216,14 +221,14 @@
 
       <!-- Seção Sobre Mim -->
       <section id="about" class="py-20 lg:py-32">
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
-          <div class="lg:col-span-2 animate-on-scroll">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center" style = "display: flex; justify-content: center;">
+          <!-- <div class="lg:col-span-2 animate-on-scroll">
             <img
               src="https://placehold.co/600x600/1e1b4b/ffffff?text=Your+Photo"
               alt="Photo of Matheus Nogueira"
               class="rounded-2xl shadow-2xl w-full h-auto object-cover aspect-square"
             />
-          </div>
+          </div> -->
           <div
             class="lg:col-span-3 animate-on-scroll"
             style="transition-delay: 200ms"
@@ -318,20 +323,20 @@
             to get in touch.
           </p>
           <a
-            href="mailto:youremail@example.com"
+            href="mailto:matheusb.n@hotmail.com"
             class="mt-8 inline-block text-2xl md:text-3xl font-semibold gradient-text hover:brightness-125 transition-all duration-300"
           >
-            youremail@example.com
+            matheusb.n@hotmail.com
           </a>
           <div class="mt-10 flex justify-center gap-6 text-4xl">
             <a
-              href="#"
+              href="https://github.com/matbn"
               target="_blank"
               class="text-gray-400 hover:text-indigo-400 transition-colors duration-300"
               ><i class="bx bxl-github"></i
             ></a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/matheus-batista-196734131"
               target="_blank"
               class="text-gray-400 hover:text-indigo-400 transition-colors duration-300"
               ><i class="bx bxl-linkedin-square"></i
@@ -343,7 +348,7 @@
 
     <footer class="text-center py-8 border-t border-gray-800">
       <p class="text-gray-500" data-key="footerText">
-        © 2024 [Matheus Nogueira]. All rights reserved.
+        © 2025 Matheus Nogueira. All rights reserved.
       </p>
     </footer>
 
@@ -354,7 +359,7 @@
     >
       <div
         id="modal-content"
-        class="bg-[#1a1a1a] rounded-2xl p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto relative transform scale-95 transition-transform duration-300"
+        class="bg-[#1a1a1a] rounded-2xl p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative transform scale-95 transition-transform duration-300"
       >
         <!-- Modal content will be inserted here -->
       </div>
@@ -363,6 +368,60 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         // --- Translations Data ---
+        // Campos comuns dos projetos (não dependem do idioma)
+        const projectsBase = [
+          {
+            id: 1,
+            image: "media/project1-main.png",
+            gallery: [
+              "media/project1-main.png",
+              "media/project1-more1.png",
+              "media/project1-more2.png",
+              "media/project1-more3.png",
+              "media/project1-more4.png",
+              "media/project1-more5.png"
+            ],
+            liveUrl: "",
+            repoUrl: "",
+            articleUrl: "https://www.sciencedirect.com/science/article/abs/pii/S1875952119300461"
+          },
+          {
+            id: 2,
+            image: "media/project2-main.png",
+            gallery: [
+              "media/project2-main.png",
+              "media/project2-more1.png",
+              "media/project2-more2.png",
+              "media/project2-more3.png"
+            ],
+            liveUrl: "",
+            repoUrl: "",
+            articleUrl: "https://ieeexplore.ieee.org/abstract/document/8921041"
+          },
+          {
+            id: 3,
+            image: "media/project3-main.png",
+            gallery: [
+              "media/project3-main.png",
+              "media/project3-more1.png"
+            ],
+            liveUrl: "",
+            repoUrl: "",
+            articleUrl: ""
+          },
+          {
+            id: 4,
+            image: "media/project4-main.png",
+            gallery: [
+              "media/project4-main.png",
+              { type: "video", src: "media/project4-video.mp4" }
+            ],
+            liveUrl: "https://maquiavelds.itch.io/powerloop",
+            repoUrl: "",
+            articleUrl: ""
+          }
+        ];
+
         const translations = {
           en: {
             pageTitle: "Matheus Nogueira | Game & VR Developer",
@@ -381,7 +440,7 @@
             heroBtnContact: "Get in Touch",
             aboutTitle: "About Me",
             aboutP1:
-              "I'm a developer with X years of experience, specializing in game and VR application development using Unity and C#. My journey in programming began with a passion for video games, and since then, I've been fascinated by the power of interactive technology to tell stories and create new realities.",
+              "I'm a developer with 7 years of experience, specializing in game and VR application development using Unity and C#. My journey in programming began with a passion for video games, and since then, I've been fascinated by the power of interactive technology to tell stories and create new realities.",
             aboutP2:
               "To pursue this career, I graduated with a bachelor's degree in Computer Science and a master's degree in Applied Informatics, both from the University of Fortaleza. During my undergraduate studies, I worked at the Research and Innovation Laboratory (LAPIN), where I had my first professional experience developing research projects with the tools Unity 3D and Unreal Engine for real clients. Also I've been using AI models to get Innovation into those applications.",
             skillsTitle: "My Skills",
@@ -395,60 +454,34 @@
             projectDetailsButton: "Learn More",
             modalLiveButton: "View Live",
             modalRepoButton: "Repository",
+            modalArticleButton: "Article",
             projects: [
-              {
+              // Usar spread para garantir objetos independentes
+              { ...projectsBase[0],
                 id: 1,
                 title: "Heavy Machinery Simulator",
                 category: "Virtual Reality",
-                description:
-                  "This project was carried out for one of the largest home appliance manufacturers in the country. The demand arose due to lost production time to teach new employees, which requires stopping the process of a machinery, in addition to trying to reduce the chances of potential problems that could occur for both the machinery and the employee in training. The project was carried out using Unreal Engine 4, and tried to be as faithful as possible to the machinery used in a steel sheet manufacturing process. The simulator also contains gamification elements to help employees engage with training.",
-                image: "https://placehold.co/600x400/1e1b4b/ffffff?text=VR+Sim",
-                tags: ["Unreal", "Blueprint", "C++", "Simulation", "Android"],
-                liveUrl: "",
-                repoUrl: ""
-              },
-              {
+                description: "This project was carried out for one of the largest home appliance manufacturers in the country. The demand arose due to lost production time to teach new employees, which requires stopping the process of a machinery, in addition to trying to reduce the chances of potential problems that could occur for both the machinery and the employee in training. The project was carried out using Unreal Engine 4, and tried to be as faithful as possible to the machinery used in a steel sheet manufacturing process. The simulator also contains gamification elements to help employees engage with training.",
+                tags: ["Unreal", "Blueprint", "C++", "Simulation"] },
+              { ...projectsBase[1],
                 id: 2,
                 title: "Vestibular Rehabilitation in VR",
                 category: "Virtual Reality",
-                description:
-                  "This project carried out in Unity 3D aimed to transform mechanical stimuli performed by doctors into stimuli in Virtual Reality, to improve the work of the doctors, giving new possibilities for configurations for these stimuli, and at the same time adding a feedback, obtained through a scale with USB connection. , which tells the app the trends of the patient's balance problems. The stimuli have options that can be configured in real time by the doctor through a cloud system that connects directly to the Virtual Reality application. The project also has minigames to help with treatment.",
-                image:
-                  "https://placehold.co/600x400/4c1d95/ffffff?text=Indie+Game",
-                tags: ["Unity", "C#", "Virtual Reality", "Android"],
-                liveUrl: "",
-                repoUrl: ""
-              },
-              {
+                description: "This project carried out in Unity 3D aimed to transform mechanical stimuli performed by doctors into stimuli in Virtual Reality, to improve the work of the doctors, giving new possibilities for configurations for these stimuli, and at the same time adding a feedback, obtained through a scale with USB connection. , which tells the app the trends of the patient's balance problems. The stimuli have options that can be configured in real time by the doctor through a cloud system that connects directly to the Virtual Reality application. The project also has minigames to help with treatment.",
+                tags: ["Unity", "C#", "Virtual Reality", "Android"] },
+              { ...projectsBase[2],
                 id: 3,
                 title: "Eyes of the City",
                 category: "Artificial Intelligence",
-                description:
-                  "The Eyes of the City project consists of a system designed to be implemented in city hall vehicles and that of its partners to collect information about garbage found on public roads. This project was prototyped in Unreal Engine 4, but its final version targeted a low-cost mobile device with a camera attached. For this device, a software was implemented that uses artificial intelligence and computer vision techniques to detect and transmit in real time information about places where garbage accumulated in inappropriate places on the street was found.",
-                image: "https://placehold.co/600x400/5b21b6/ffffff?text=AR+App",
-                tags: [
-                  "Unreal",
-                  "Blueprint",
-                  "Python",
-                  "AI",
-                  "Computer Vision",
-                ],
-                liveUrl: "",
-                repoUrl: ""
-              },
-              {
+                description: "The Eyes of the City project consists of a system designed to be implemented in city hall vehicles and that of its partners to collect information about garbage found on public roads. This project was prototyped in Unreal Engine 4, but its final version targeted a low-cost mobile device with a camera attached. For this device, a software was implemented that uses artificial intelligence and computer vision techniques to detect and transmit in real time information about places where garbage accumulated in inappropriate places on the street was found.",
+                tags: ["Unreal", "Blueprint", "Python", "AI", "Computer Vision"] },
+              { ...projectsBase[3],
                 id: 4,
                 title: "PowerLoop",
                 category: "Game",
-                description:
-                  "PowerLoop was a game developed for the GameJam CTRL ALT JAM, in which I participated as Programmer and VoiceOver.",
-                image:
-                  "https://placehold.co/600x400/6d28d9/ffffff?text=Multiplayer",
-                tags: ["Unity", "C#"],
-                liveUrl: "",
-                repoUrl: ""
-              },
-            ],
+                description: "PowerLoop was a game developed for the GameJam CTRL ALT JAM, in which I participated as Programmer and VoiceOver.",
+                tags: ["Unity", "C#"] }
+            ]
           },
           pt: {
             pageTitle: "Matheus Nogueira | Desenvolvedor de Jogos e VR",
@@ -482,60 +515,33 @@
             projectDetailsButton: "Saber Mais",
             modalLiveButton: "Ver ao Vivo",
             modalRepoButton: "Repositório",
+            modalArticleButton: "Artigo",
             projects: [
-              {
+              { ...projectsBase[0],
                 id: 1,
                 title: "Simulador de Máquinas Pesadas",
                 category: "Realidade Virtual",
-                description:
-                  "Este projeto foi realizado para um dos maiores fabricantes de eletrodomésticos do país. A demanda surgiu devido ao tempo de produção perdido para ensinar novos funcionários, o que exige a parada do processo de uma máquina, além de tentar reduzir as chances de potenciais problemas que poderiam ocorrer tanto para a máquina quanto para o funcionário em treinamento. O projeto foi realizado utilizando Unreal Engine 4, buscando ser o mais fiel possível à máquina utilizada em um processo de fabricação de chapas de aço. O simulador também contém elementos de gamificação para ajudar os funcionários a se engajarem com o treinamento.",
-                image: "https://placehold.co/600x400/1e1b4b/ffffff?text=VR+Sim",
-                tags: ["Unreal", "Blueprint", "C++", "Simulação", "Android"],
-                liveUrl: "",
-                repoUrl: ""
-              },
-              {
+                description: "Este projeto foi realizado para um dos maiores fabricantes de eletrodomésticos do país. A demanda surgiu devido ao tempo de produção perdido para ensinar novos funcionários, o que exige a parada do processo de uma máquina, além de tentar reduzir as chances de potenciais problemas que poderiam ocorrer tanto para a máquina quanto para o funcionário em treinamento. O projeto foi realizado utilizando Unreal Engine 4, buscando ser o mais fiel possível à máquina utilizada em um processo de fabricação de chapas de aço. O simulador também contém elementos de gamificação para ajudar os funcionários a se engajarem com o treinamento.",
+                tags: ["Unreal", "Blueprint", "C++", "Simulação"] },
+              { ...projectsBase[1],
                 id: 2,
                 title: "Reabilitação Vestibular em VR",
                 category: "Realidade Virtual",
-                description:
-                  "Este projeto realizado em Unity 3D teve como objetivo transformar estímulos mecânicos realizados por médicos em estímulos em Realidade Virtual, para aprimorar o trabalho dos médicos, oferecendo novas possibilidades de configurações para esses estímulos e, ao mesmo tempo, adicionando um feedback, obtido por meio de uma balança com conexão USB, que informa ao aplicativo as tendências dos problemas de equilíbrio do paciente. Os estímulos possuem opções que podem ser configuradas em tempo real pelo médico através de um sistema em nuvem que se conecta diretamente ao aplicativo de Realidade Virtual. O projeto também possui minijogos para auxiliar no tratamento.",
-                image:
-                  "https://placehold.co/600x400/4c1d95/ffffff?text=Indie+Game",
-                tags: ["Unity", "C#", "Realidade Virtual", "Android"],
-                liveUrl: "",
-                repoUrl: ""
-              },
-              {
+                description: "Este projeto realizado em Unity 3D teve como objetivo transformar estímulos mecânicos realizados por médicos em estímulos em Realidade Virtual, para aprimorar o trabalho dos médicos, oferecendo novas possibilidades de configurações para esses estímulos e, ao mesmo tempo, adicionando um feedback, obtido por meio de uma balança com conexão USB, que informa ao aplicativo as tendências dos problemas de equilíbrio do paciente. Os estímulos possuem opções que podem ser configuradas em tempo real pelo médico através de um sistema em nuvem que se conecta diretamente ao aplicativo de Realidade Virtual. O projeto também possui minijogos para auxiliar no tratamento.",
+                tags: ["Unity", "C#", "Realidade Virtual", "Android"] },
+              { ...projectsBase[2],
                 id: 3,
                 title: "Olhos da Cidade",
                 category: "Inteligência Artificial",
-                description:
-                  "O projeto Olhos da Cidade consiste em um sistema projetado para ser implementado em veículos da prefeitura e de seus parceiros para coletar informações sobre lixo encontrado em vias públicas. Este projeto foi prototipado na Unreal Engine 4, mas sua versão final teve como alvo um dispositivo móvel de baixo custo com uma câmera acoplada. Para este dispositivo, foi implementado um software que utiliza inteligência artificial e técnicas de visão computacional para detectar e transmitir em tempo real informações sobre locais onde lixo acumulado em locais inadequados na rua foi encontrado.",
-                image: "https://placehold.co/600x400/5b21b6/ffffff?text=AR+App",
-                tags: [
-                  "Unreal",
-                  "Blueprint",
-                  "Python",
-                  "IA",
-                  "Visão Computacional",
-                ],
-                liveUrl: "",
-                repoUrl: ""
-              },
-              {
+                description: "O projeto Olhos da Cidade consiste em um sistema projetado para ser implementado em veículos da prefeitura e de seus parceiros para coletar informações sobre lixo encontrado em vias públicas. Este projeto foi prototipado na Unreal Engine 4, mas sua versão final teve como alvo um dispositivo móvel de baixo custo com uma câmera acoplada. Para este dispositivo, foi implementado um software que utiliza inteligência artificial e técnicas de visão computacional para detectar e transmitir em tempo real informações sobre locais onde lixo acumulado em locais inadequados na rua foi encontrado.",
+                tags: ["Unreal", "Blueprint", "Python", "IA", "Visão Computacional"] },
+              { ...projectsBase[3],
                 id: 4,
                 title: "PowerLoop",
                 category: "Jogo",
-                description:
-                  "PowerLoop foi um jogo desenvolvido para a GameJam CTRL ALT JAM, na qual participei como Programador e VoiceOver.",
-                image:
-                  "https://placehold.co/600x400/6d28d9/ffffff?text=Multiplayer",
-                tags: ["Unity", "C#"],
-                liveUrl: "",
-                repoUrl: ""
-              },
-            ],
+                description: "PowerLoop foi um jogo desenvolvido para a GameJam CTRL ALT JAM, na qual participei como Programador e VoiceOver.",
+                tags: ["Unity", "C#"] }
+            ]
           },
         };
 
@@ -549,27 +555,14 @@
           localStorage.setItem("language", lang);
 
           document.querySelectorAll("[data-key]").forEach((element) => {
-            // Não sobrescrever o conteúdo do grid de projetos
-            if (element.id === "projects-grid") return;
             const key = element.dataset.key;
             if (translations[lang][key]) {
               element.innerHTML = translations[lang][key];
             }
           });
 
-          // Atualizar manualmente título e subtítulo dos projetos
-          const projectsTitle = document.querySelector('[data-key="projectsTitle"]');
-          if (projectsTitle) {
-            projectsTitle.innerHTML = translations[lang]["projectsTitle"];
-          }
-          const projectsSubtitle = document.querySelector('[data-key="projectsSubtitle"]');
-          if (projectsSubtitle) {
-            projectsSubtitle.innerHTML = translations[lang]["projectsSubtitle"];
-          }
-
           document.documentElement.lang = lang === "en" ? "en-US" : "pt-BR";
 
-          // Update active button style
           document.querySelectorAll(".lang-button").forEach((btn) => {
             btn.classList.remove("active");
             if (btn.id.includes(lang)) {
@@ -581,36 +574,27 @@
         };
 
         const renderProjects = () => {
-          // Salvar os elementos existentes para preservar as animações
-          const existingCards = Array.from(projectsGrid.children);
           projectsGrid.innerHTML = "";
           const currentProjects = translations[currentLang].projects;
           
           currentProjects.forEach((project, index) => {
             const projectCard = document.createElement("div");
-            // Se existir um card anterior, copiar suas classes de animação
-            if (existingCards[index]) {
-              projectCard.className = existingCards[index].className;
-              projectCard.style.transitionDelay = existingCards[index].style.transitionDelay;
-            } else {
-              projectCard.className = "bg-gray-900 rounded-xl overflow-hidden group animate-on-scroll";
-              projectCard.style.transitionDelay = `${index * 100}ms`;
-            }
+            projectCard.className = "bg-gray-900 rounded-xl overflow-hidden group animate-on-scroll";
+            projectCard.style.transitionDelay = `${index * 100}ms`;
             projectCard.innerHTML = `
-                        <div class="overflow-hidden">
-                            <img src="${project.image}" alt="${project.title}" class="w-full h-60 object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold">${project.title}</h3>
-                            <p class="text-indigo-400 text-sm mt-1">${project.category}</p>
-                            <button data-project-id="${project.id}" class="open-modal-button mt-4 text-sm font-semibold text-white hover:text-indigo-300 transition-colors duration-300">
-                                ${translations[currentLang].projectDetailsButton} <i class='bx bx-right-arrow-alt align-middle'></i>
-                            </button>
-                        </div>
-                    `;
+                <div class="overflow-hidden">
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-60 object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">${project.title}</h3>
+                    <p class="text-indigo-400 text-sm mt-1">${project.category}</p>
+                    <button data-project-id="${project.id}" class="open-modal-button mt-4 text-sm font-semibold text-white hover:text-indigo-300 transition-colors duration-300">
+                        ${translations[currentLang].projectDetailsButton} <i class='bx bx-right-arrow-alt align-middle'></i>
+                    </button>
+                </div>
+            `;
             projectsGrid.appendChild(projectCard);
           });
-          // Re-attach event listeners for the new buttons
           document.querySelectorAll(".open-modal-button").forEach((button) => {
             button.addEventListener("click", () =>
               openModal(button.dataset.projectId)
@@ -624,8 +608,6 @@
           );
           if (!project) return;
 
-
-          // Renderizar botões apenas se os links existirem
           let modalButtons = '';
           if (project.liveUrl) {
             modalButtons += `<a href="${project.liveUrl}" target="_blank" class="flex-1 text-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">${translations[currentLang].modalLiveButton}</a>`;
@@ -633,12 +615,42 @@
           if (project.repoUrl) {
             modalButtons += `<a href="${project.repoUrl}" target="_blank" class="flex-1 text-center bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">${translations[currentLang].modalRepoButton}</a>`;
           }
+          if (project.articleUrl) {
+            modalButtons += `<a href="${project.articleUrl}" target="_blank" class="flex-1 text-center bg-pink-700 hover:bg-pink-800 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">${translations[currentLang].modalArticleButton}</a>`;
+          }
+
+          // Renderização da galeria (imagem ou vídeo)
+          let mainGalleryItem = project.gallery[0];
+          let mainGalleryHtml = '';
+          if (typeof mainGalleryItem === 'string') {
+            mainGalleryHtml = `<img id="modal-main-image" src="${mainGalleryItem}" alt="Imagem principal de ${project.title}" class="w-full h-auto max-h-[450px] object-contain rounded-lg mb-4 bg-black/20">`;
+          } else if (mainGalleryItem.type === 'video') {
+            mainGalleryHtml = `<video id="modal-main-video" src="${mainGalleryItem.src}" controls class="w-full h-auto max-h-[450px] object-contain rounded-lg mb-4 bg-black/20"></video>`;
+          }
+
+          // Miniaturas
+          let thumbnailsHtml = project.gallery.map((item, index) => {
+            if (typeof item === 'string') {
+              return `<img data-gallery-index="${index}" src="${item}" alt="Miniatura ${index + 1}" class="gallery-thumbnail w-24 h-16 object-cover rounded-md cursor-pointer border-2 border-transparent hover:border-indigo-500 transition-all">`;
+            } else if (item.type === 'video') {
+              return `<video data-gallery-index="${index}" src="${item.src}" class="gallery-thumbnail w-24 h-16 object-cover rounded-md cursor-pointer border-2 border-transparent hover:border-indigo-500 transition-all"></video>`;
+            }
+          }).join('');
 
           modalContent.innerHTML = `
             <button id="modal-close-button-inner" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl z-10">
                 <i class='bx bx-x'></i>
             </button>
-            <img src="${project.image}" alt="${project.title}" class="w-full h-64 object-cover rounded-t-lg mb-6">
+            
+            <!-- Image/Video Gallery -->
+            <div class="mb-6">
+                <div id="modal-main-media">${mainGalleryHtml}</div>
+                <div class="flex gap-2 justify-center flex-wrap">
+                    ${thumbnailsHtml}
+                </div>
+            </div>
+
+            <!-- Project Details -->
             <div class="px-2">
                 <h2 class="text-3xl font-bold mb-2">${project.title}</h2>
                 <div class="flex flex-wrap gap-2 mb-6">
@@ -657,9 +669,30 @@
           modalContent.classList.remove("scale-95");
           document.body.style.overflow = "hidden";
 
-          document
-            .getElementById("modal-close-button-inner")
-            .addEventListener("click", closeModal);
+          document.getElementById("modal-close-button-inner").addEventListener("click", closeModal);
+
+          // Gallery Logic
+          const mainMediaDiv = document.getElementById('modal-main-media');
+          const thumbnails = modalContent.querySelectorAll('.gallery-thumbnail');
+          
+          thumbnails.forEach(thumb => {
+              thumb.addEventListener('click', () => {
+                  const idx = parseInt(thumb.getAttribute('data-gallery-index'));
+                  const item = project.gallery[idx];
+                  let html = '';
+                  if (typeof item === 'string') {
+                    html = `<img id=\"modal-main-image\" src=\"${item}\" alt=\"Imagem principal de ${project.title}\" class=\"w-full h-auto max-h-[450px] object-contain rounded-lg mb-4 bg-black/20\">`;
+                  } else if (item.type === 'video') {
+                    html = `<video id=\"modal-main-video\" src=\"${item.src}\" controls class=\"w-full h-auto max-h-[450px] object-contain rounded-lg mb-4 bg-black/20\"></video>`;
+                  }
+                  mainMediaDiv.innerHTML = html;
+                  thumbnails.forEach(t => t.classList.remove('active'));
+                  thumb.classList.add('active');
+              });
+          });
+          if(thumbnails.length > 0) {
+            thumbnails[0].classList.add('active');
+          }
         };
 
         const closeModal = () => {
@@ -673,24 +706,14 @@
         });
 
         // --- Event Listeners ---
-        document
-          .getElementById("lang-en")
-          .addEventListener("click", () => setLanguage("en"));
-        document
-          .getElementById("lang-pt")
-          .addEventListener("click", () => setLanguage("pt"));
-        document
-          .getElementById("lang-en-mobile")
-          .addEventListener("click", () => setLanguage("en"));
-        document
-          .getElementById("lang-pt-mobile")
-          .addEventListener("click", () => setLanguage("pt"));
+        document.getElementById("lang-en").addEventListener("click", () => setLanguage("en"));
+        document.getElementById("lang-pt").addEventListener("click", () => setLanguage("pt"));
+        document.getElementById("lang-en-mobile").addEventListener("click", () => setLanguage("en"));
+        document.getElementById("lang-pt-mobile").addEventListener("click", () => setLanguage("pt"));
 
         const mobileMenuButton = document.getElementById("mobile-menu-button");
         const mobileMenu = document.getElementById("mobile-menu");
-        mobileMenuButton.addEventListener("click", () =>
-          mobileMenu.classList.toggle("hidden")
-        );
+        mobileMenuButton.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
         mobileMenu.addEventListener("click", (e) => {
           if (e.target.tagName === "A") mobileMenu.classList.add("hidden");
         });
@@ -698,16 +721,8 @@
         // --- Initial Load ---
         setLanguage(currentLang);
 
-        // Sempre renderizar projetos ao navegar para a seção de projetos
-        window.addEventListener('hashchange', () => {
-          if (window.location.hash === '#projects') {
-            renderProjects();
-          }
-        });
-
         // --- Animation Observer ---
-        const animatedElements =
-          document.querySelectorAll(".animate-on-scroll");
+        const animatedElements = document.querySelectorAll(".animate-on-scroll");
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
