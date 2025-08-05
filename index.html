@@ -414,7 +414,7 @@
             image: "media/project4-main.png",
             gallery: [
               "media/project4-main.png",
-              { type: "video", src: "media/project4-video.mp4" }
+              { type: "youtube", src: "https://youtu.be/94Vr1fMoIQM" }
             ],
             liveUrl: "https://maquiavelds.itch.io/powerloop",
             repoUrl: "",
@@ -626,6 +626,11 @@
             mainGalleryHtml = `<img id="modal-main-image" src="${mainGalleryItem}" alt="Imagem principal de ${project.title}" class="w-full h-auto max-h-[450px] object-contain rounded-lg mb-4 bg-black/20">`;
           } else if (mainGalleryItem.type === 'video') {
             mainGalleryHtml = `<video id="modal-main-video" src="${mainGalleryItem.src}" controls class="w-full h-auto max-h-[450px] object-contain rounded-lg mb-4 bg-black/20"></video>`;
+          } else if (mainGalleryItem.type === 'youtube') {
+            // Extrai o ID do vídeo do YouTube
+            let ytId = mainGalleryItem.src.split('youtu.be/')[1] || mainGalleryItem.src.split('v=')[1];
+            if (ytId && ytId.includes('?')) ytId = ytId.split('?')[0];
+            mainGalleryHtml = `<div class="w-full max-h-[450px] aspect-video rounded-lg mb-4 bg-black/20 flex items-center justify-center"><iframe id="modal-main-youtube" src="https://www.youtube.com/embed/${ytId}" frameborder="0" allowfullscreen class="w-full h-full rounded-lg"></iframe></div>`;
           }
 
           // Miniaturas
@@ -634,6 +639,11 @@
               return `<img data-gallery-index="${index}" src="${item}" alt="Miniatura ${index + 1}" class="gallery-thumbnail w-24 h-16 object-cover rounded-md cursor-pointer border-2 border-transparent hover:border-indigo-500 transition-all">`;
             } else if (item.type === 'video') {
               return `<video data-gallery-index="${index}" src="${item.src}" class="gallery-thumbnail w-24 h-16 object-cover rounded-md cursor-pointer border-2 border-transparent hover:border-indigo-500 transition-all"></video>`;
+            } else if (item.type === 'youtube') {
+              // Mostra thumbnail do YouTube
+              let ytId = item.src.split('youtu.be/')[1] || item.src.split('v=')[1];
+              if (ytId && ytId.includes('?')) ytId = ytId.split('?')[0];
+              return `<img data-gallery-index="${index}" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube" class="gallery-thumbnail w-24 h-16 object-cover rounded-md cursor-pointer border-2 border-transparent hover:border-indigo-500 transition-all">`;
             }
           }).join('');
 
@@ -684,6 +694,10 @@
                     html = `<img id=\"modal-main-image\" src=\"${item}\" alt=\"Imagem principal de ${project.title}\" class=\"w-full h-auto max-h-[450px] object-contain rounded-lg mb-4 bg-black/20\">`;
                   } else if (item.type === 'video') {
                     html = `<video id=\"modal-main-video\" src=\"${item.src}\" controls class=\"w-full h-auto max-h-[450px] object-contain rounded-lg mb-4 bg-black/20\"></video>`;
+                  } else if (item.type === 'youtube') {
+                    let ytId = item.src.split('youtu.be/')[1] || item.src.split('v=')[1];
+                    if (ytId && ytId.includes('?')) ytId = ytId.split('?')[0];
+                    html = `<div class=\"w-full max-h-[450px] aspect-video rounded-lg mb-4 bg-black/20 flex items-center justify-center\"><iframe id=\"modal-main-youtube\" src=\"https://www.youtube.com/embed/${ytId}\" frameborder=\"0\" allowfullscreen class=\"w-full h-full rounded-lg\"></iframe></div>`;
                   }
                   mainMediaDiv.innerHTML = html;
                   thumbnails.forEach(t => t.classList.remove('active'));
