@@ -1,0 +1,28 @@
+<header class="fixed top-0 left-0 right-0 z-50 glassmorphism">
+  <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="#home" class="text-xl font-bold tracking-tighter" data-key="myName">Matheus Nogueira</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a href="#about" class="hover:text-indigo-400 transition-colors duration-300" data-key="navAbout">About</a>
+      <a href="#projects" class="hover:text-indigo-400 transition-colors duration-300" data-key="navProjects">Projects</a>
+      <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300" data-key="navContact">Contact</a>
+      <div class="flex items-center space-x-2 border-l border-gray-600 pl-6">
+        <button id="lang-en" class="lang-button text-sm font-semibold hover:text-indigo-400 transition-colors">EN</button>
+        <span class="text-gray-500">/</span>
+        <button id="lang-pt" class="lang-button text-sm font-semibold hover:text-indigo-400 transition-colors">PT</button>
+      </div>
+    </div>
+    <button id="mobile-menu-button" class="md:hidden text-2xl">
+      <i class="bx bx-menu"></i>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden bg-[#101010] p-4">
+    <a href="#about" class="block py-2 text-center hover:text-indigo-400 transition-colors duration-300" data-key="navAboutMobile">About</a>
+    <a href="#projects" class="block py-2 text-center hover:text-indigo-400 transition-colors duration-300" data-key="navProjectsMobile">Projects</a>
+    <a href="#contact" class="block mt-2 text-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300" data-key="navContactMobile">Contact</a>
+    <div class="flex items-center justify-center space-x-2 border-t border-gray-700 pt-4 mt-4">
+      <button id="lang-en-mobile" class="lang-button text-sm font-semibold hover:text-white transition-colors">EN</button>
+      <span class="text-gray-500">/</span>
+      <button id="lang-pt-mobile" class="lang-button text-sm font-semibold hover:text-white transition-colors">PT</button>
+    </div>
+  </div>
+</header>
