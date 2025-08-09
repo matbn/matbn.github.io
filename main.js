@@ -13,10 +13,26 @@ async function loadComponent(id, path) {
   }
 }
 
+// Função utilitária para mesclar dados comuns e específicos
+function buildProjects(base, specifics) {
+  return specifics.map((spec, idx) => ({ ...base[idx], ...spec }));
+}
 
 // --- COMPONENT: Translations e dados dos projetos ---
 // Campos comuns dos projetos (não dependem do idioma)
 const projectsBase = [
+  {
+    id: 0,
+    image: "media/project-main.png",
+    gallery: [
+      "media/project-main.png",
+      "media/project-more1.png",
+      "media/project-more2.png"
+    ],
+    liveUrl: "https://www.youtube.com/live/nrE5V41hrzI?si=IuwOfGSmIQVJO7z8&t=80",
+    repoUrl: "",
+    articleUrl: "https://link.springer.com/chapter/10.1007/978-3-031-61963-2_5"
+  },
   {
     id: 1,
     image: "media/project1-main.png",
@@ -69,6 +85,82 @@ const projectsBase = [
   }
 ];
 
+const projectsEn = [
+  {
+    id: 0,
+    title: "Interactive 3D Avatar",
+    category: "Interaction",
+    description: "Project consisting of an interactive 3D avatar used as a virtual presenter for the company. The project was developed in two stages, the first using Unity and then migrated to Unreal Engine to achieve better graphic results. This project was used by Samsung in several of its live shops available on YouTube.",
+    tags: ["Interaction", "Artificial Intelligence", "Unreal", "Unity"]
+  },
+  {
+    id: 1,
+    title: "Heavy Machinery Simulator",
+    category: "Virtual Reality",
+    description: "This project was carried out for one of the largest home appliance manufacturers in the country. The demand arose due to lost production time to teach new employees, which requires stopping the process of a machinery, in addition to trying to reduce the chances of potential problems that could occur for both the machinery and the employee in training. The project was carried out using Unreal Engine 4, and tried to be as faithful as possible to the machinery used in a steel sheet manufacturing process. The simulator also contains gamification elements to help employees engage with training.",
+    tags: ["Unreal", "Blueprint", "C++", "Simulation"]
+  },
+  {
+    id: 2,
+    title: "Vestibular Rehabilitation in VR",
+    category: "Virtual Reality",
+    description: "This project carried out in Unity 3D aimed to transform mechanical stimuli performed by doctors into stimuli in Virtual Reality, to improve the work of the doctors, giving new possibilities for configurations for these stimuli, and at the same time adding a feedback, obtained through a scale with USB connection. , which tells the app the trends of the patient's balance problems. The stimuli have options that can be configured in real time by the doctor through a cloud system that connects directly to the Virtual Reality application. The project also has minigames to help with treatment.",
+    tags: ["Unity", "C#", "Virtual Reality", "Android"]
+  },
+  {
+    id: 3,
+    title: "Eyes of the City",
+    category: "Artificial Intelligence",
+    description: "The Eyes of the City project consists of a system designed to be implemented in city hall vehicles and that of its partners to collect information about garbage found on public roads. This project was prototyped in Unreal Engine 4, but its final version targeted a low-cost mobile device with a camera attached. For this device, a software was implemented that uses artificial intelligence and computer vision techniques to detect and transmit in real time information about places where garbage accumulated in inappropriate places on the street was found.",
+    tags: ["Unreal", "Blueprint", "Python", "AI", "Computer Vision"]
+  },
+  {
+    id: 4,
+    title: "PowerLoop",
+    category: "Game",
+    description: "PowerLoop was a game developed for the GameJam CTRL ALT JAM, in which I participated as Programmer and VoiceOver.",
+    tags: ["Unity", "C#"]
+  }
+];
+
+const projectsPt = [
+  {
+    id: 0,
+    title: "Avatar 3D Interativo",
+    category: "Interação",
+    description: "Projeto que consiste em um avatar 3D interativo utilizado como um apresentador virtual da empresa. O projeto foi desenvolvido em duas etapas, a primeira utilizando Unity e depois migrado para Unreal Engine, para atingir melhores resultados gráficos. Esse projeto foi utilizado pela Samsung em diversas de suas live shops disponíveis no YouTube.",
+    tags: ["Interação", "Inteligência Artificial", "Unreal", "Unity"]
+  },
+  {
+    id: 1,
+    title: "Simulador de Máquinas Pesadas",
+    category: "Realidade Virtual",
+    description: "Este projeto foi realizado para um dos maiores fabricantes de eletrodomésticos do país. A demanda surgiu devido ao tempo de produção perdido para ensinar novos funcionários, o que exige a parada do processo de uma máquina, além de tentar reduzir as chances de potenciais problemas que poderiam ocorrer tanto para a máquina quanto para o funcionário em treinamento. O projeto foi realizado utilizando Unreal Engine 4, buscando ser o mais fiel possível à máquina utilizada em um processo de fabricação de chapas de aço. O simulador também contém elementos de gamificação para ajudar os funcionários a se engajarem com o treinamento.",
+    tags: ["Unreal", "Blueprint", "C++", "Simulação"]
+  },
+  {
+    id: 2,
+    title: "Reabilitação Vestibular em VR",
+    category: "Realidade Virtual",
+    description: "Este projeto realizado em Unity 3D teve como objetivo transformar estímulos mecânicos realizados por médicos em estímulos em Realidade Virtual, para aprimorar o trabalho dos médicos, oferecendo novas possibilidades de configurações para esses estímulos e, ao mesmo tempo, adicionando um feedback, obtido por meio de uma balança com conexão USB, que informa ao aplicativo as tendências dos problemas de equilíbrio do paciente. Os estímulos possuem opções que podem ser configuradas em tempo real pelo médico através de um sistema em nuvem que se conecta diretamente ao aplicativo de Realidade Virtual. O projeto também possui minijogos para auxiliar no tratamento.",
+    tags: ["Unity", "C#", "Realidade Virtual", "Android"]
+  },
+  {
+    id: 3,
+    title: "Olhos da Cidade",
+    category: "Inteligência Artificial",
+    description: "O projeto Olhos da Cidade consiste em um sistema projetado para ser implementado em veículos da prefeitura e de seus parceiros para coletar informações sobre lixo encontrado em vias públicas. Este projeto foi prototipado na Unreal Engine 4, mas sua versão final teve como alvo um dispositivo móvel de baixo custo com uma câmera acoplada. Para este dispositivo, foi implementado um software que utiliza inteligência artificial e técnicas de visão computacional para detectar e transmitir em tempo real informações sobre locais onde lixo acumulado em locais inadequados na rua foi encontrado.",
+    tags: ["Unreal", "Blueprint", "Python", "IA", "Visão Computacional"]
+  },
+  {
+    id: 4,
+    title: "PowerLoop",
+    category: "Jogo",
+    description: "PowerLoop foi um jogo desenvolvido para a GameJam CTRL ALT JAM, na qual participei como Programador e VoiceOver.",
+    tags: ["Unity", "C#"]
+  }
+];
+
 const translations = {
   en: {
     pageTitle: "Matheus Nogueira | Game & VR Developer",
@@ -102,74 +194,7 @@ const translations = {
     modalLiveButton: "View Live",
     modalRepoButton: "Repository",
     modalArticleButton: "Article",
-    projects: [
-      {
-        id: 1,
-        image: "media/project1-main.png",
-        gallery: [
-          "media/project1-main.png",
-          "media/project1-more1.png",
-          "media/project1-more2.png",
-          "media/project1-more3.png",
-          "media/project1-more4.png",
-          "media/project1-more5.png"
-        ],
-        liveUrl: "",
-        repoUrl: "",
-        articleUrl: "https://www.sciencedirect.com/science/article/abs/pii/S1875952119300461",
-        title: "Heavy Machinery Simulator",
-        category: "Virtual Reality",
-        description: "This project was carried out for one of the largest home appliance manufacturers in the country. The demand arose due to lost production time to teach new employees, which requires stopping the process of a machinery, in addition to trying to reduce the chances of potential problems that could occur for both the machinery and the employee in training. The project was carried out using Unreal Engine 4, and tried to be as faithful as possible to the machinery used in a steel sheet manufacturing process. The simulator also contains gamification elements to help employees engage with training.",
-        tags: ["Unreal", "Blueprint", "C++", "Simulation"]
-      },
-      {
-        id: 2,
-        image: "media/project2-main.png",
-        gallery: [
-          "media/project2-main.png",
-          "media/project2-more1.png",
-          "media/project2-more2.png",
-          "media/project2-more3.png"
-        ],
-        liveUrl: "",
-        repoUrl: "",
-        articleUrl: "https://ieeexplore.ieee.org/abstract/document/8921041",
-        title: "Vestibular Rehabilitation in VR",
-        category: "Virtual Reality",
-        description: "This project carried out in Unity 3D aimed to transform mechanical stimuli performed by doctors into stimuli in Virtual Reality, to improve the work of the doctors, giving new possibilities for configurações para essas estímulos, and at the same time adding a feedback, obtido através de uma escala com USB conexão. , which tells the app the trends of the patient's balance problems. The stimuli have options that can be configured in real time by the doctor through a cloud system that connects directly to the Virtual Reality application. The project also has minigames to help with treatment.",
-        tags: ["Unity", "C#", "Virtual Reality", "Android"]
-      },
-      {
-        id: 3,
-        image: "media/project3-main.png",
-        gallery: [
-          "media/project3-main.png",
-          "media/project3-more1.png"
-        ],
-        liveUrl: "",
-        repoUrl: "",
-        articleUrl: "",
-        title: "Eyes of the City",
-        category: "Artificial Intelligence",
-        description: "The Eyes of the City project consists of a system designed to be implemented in city hall vehicles and that of its partners to collect information about garbage found on public roads. This project was prototyped in Unreal Engine 4, but its final version targeted a low-cost mobile device with a camera attached. For this device, a software was implemented that uses artificial intelligence and computer vision techniques to detect and transmit in real time information about places where garbage accumulated in inappropriate places on the street was found.",
-        tags: ["Unreal", "Blueprint", "Python", "AI", "Computer Vision"]
-      },
-      {
-        id: 4,
-        image: "media/project4-main.png",
-        gallery: [
-          "media/project4-main.png",
-          { type: "youtube", src: "https://youtu.be/94Vr1fMoIQM" }
-        ],
-        liveUrl: "https://maquiavelds.itch.io/powerloop",
-        repoUrl: "",
-        articleUrl: "",
-        title: "PowerLoop",
-        category: "Game",
-        description: "PowerLoop was a game developed for the GameJam CTRL ALT JAM, in which I participated as Programmer and VoiceOver.",
-        tags: ["Unity", "C#"]
-      }
-    ]
+    projects: buildProjects(projectsBase, projectsEn)
   },
   pt: {
     pageTitle: "Matheus Nogueira | Desenvolvedor de Jogos e VR",
@@ -204,74 +229,7 @@ const translations = {
     modalLiveButton: "Ver ao Vivo",
     modalRepoButton: "Repositório",
     modalArticleButton: "Artigo",
-    projects: [
-      {
-        id: 1,
-        image: "media/project1-main.png",
-        gallery: [
-          "media/project1-main.png",
-          "media/project1-more1.png",
-          "media/project1-more2.png",
-          "media/project1-more3.png",
-          "media/project1-more4.png",
-          "media/project1-more5.png"
-        ],
-        liveUrl: "",
-        repoUrl: "",
-        articleUrl: "https://www.sciencedirect.com/science/article/abs/pii/S1875952119300461",
-        title: "Simulador de Máquinas Pesadas",
-        category: "Realidade Virtual",
-        description: "Este projeto foi realizado para um dos maiores fabricantes de eletrodomésticos do país. A demanda surgiu devido ao tempo de produção perdido para ensinar novos funcionários, o que exige a parada do processo de uma máquina, além de tentar reduzir as chances de potenciais problemas que poderiam ocorrer tanto para a máquina quanto para o funcionário em treinamento. O projeto foi realizado utilizando Unreal Engine 4, buscando ser o mais fiel possível à máquina utilizada em um processo de fabricação de chapas de aço. O simulador também contém elementos de gamificação para ajudar os funcionários a se engajarem com o treinamento.",
-        tags: ["Unreal", "Blueprint", "C++", "Simulação"]
-      },
-      {
-        id: 2,
-        image: "media/project2-main.png",
-        gallery: [
-          "media/project2-main.png",
-          "media/project2-more1.png",
-          "media/project2-more2.png",
-          "media/project2-more3.png"
-        ],
-        liveUrl: "",
-        repoUrl: "",
-        articleUrl: "https://ieeexplore.ieee.org/abstract/document/8921041",
-        title: "Reabilitação Vestibular em VR",
-        category: "Realidade Virtual",
-        description: "Este projeto realizado em Unity 3D teve como objetivo transformar estímulos mecânicos realizados por médicos em estímulos em Realidade Virtual, para aprimorar o trabalho dos médicos, oferecendo novas possibilidades de configurações para esses estímulos e, ao mesmo tempo, adicionando um feedback, obtido por meio de uma balança com conexão USB, que informa ao aplicativo as tendências dos problemas de equilíbrio do paciente. Os estímulos possuem opções que podem ser configuradas em tempo real pelo médico através de um sistema em nuvem que se conecta diretamente ao aplicativo de Realidade Virtual. O projeto também possui minijogos para auxiliar no tratamento.",
-        tags: ["Unity", "C#", "Realidade Virtual", "Android"]
-      },
-      {
-        id: 3,
-        image: "media/project3-main.png",
-        gallery: [
-          "media/project3-main.png",
-          "media/project3-more1.png"
-        ],
-        liveUrl: "",
-        repoUrl: "",
-        articleUrl: "",
-        title: "Olhos da Cidade",
-        category: "Inteligência Artificial",
-        description: "O projeto Olhos da Cidade consiste em um sistema projetado para ser implementado em veículos da prefeitura e de seus parceiros para coletar informações sobre lixo encontrado em vias públicas. Este projeto foi prototipado na Unreal Engine 4, mas sua versão final teve como alvo um dispositivo móvel de baixo custo com uma câmera acoplada. Para este dispositivo, foi implementado um software que utiliza inteligência artificial e técnicas de visão computacional para detectar e transmitir em tempo real informações sobre locais onde lixo acumulado em locais inadequados na rua foi encontrado.",
-        tags: ["Unreal", "Blueprint", "Python", "IA", "Visão Computacional"]
-      },
-      {
-        id: 4,
-        image: "media/project4-main.png",
-        gallery: [
-          "media/project4-main.png",
-          { type: "youtube", src: "https://youtu.be/94Vr1fMoIQM" }
-        ],
-        liveUrl: "https://maquiavelds.itch.io/powerloop",
-        repoUrl: "",
-        articleUrl: "",
-        title: "PowerLoop",
-        category: "Jogo",
-        description: "PowerLoop foi um jogo desenvolvido para a GameJam CTRL ALT JAM, na qual participei como Programador e VoiceOver.",
-        tags: ["Unity", "C#"]
-      }
-    ]
+    projects: buildProjects(projectsBase, projectsPt)
   }
 };
 
