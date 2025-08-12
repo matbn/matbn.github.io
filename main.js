@@ -82,6 +82,19 @@ const projectsBase = [
     liveUrl: "https://maquiavelds.itch.io/powerloop",
     repoUrl: "",
     articleUrl: ""
+  },
+  {
+    id: 5,
+    image: "media/project5-main.png",
+    gallery: [
+      "media/project5-main.png",
+      "media/project5-more1.png",
+      "media/project5-more2.png",
+      "media/project5-more3.png"
+    ],
+    liveUrl: "https://play.google.com/store/apps/details?id=com.B25.Bolodim2_1",
+    repoUrl: "",
+    articleUrl: ""
   }
 ];
 
@@ -120,6 +133,13 @@ const projectsEn = [
     category: "Game",
     description: "PowerLoop was a game developed for the GameJam CTRL ALT JAM, in which I participated as Programmer and VoiceOver.",
     tags: ["Unity", "C#"]
+  },
+  {
+    id: 5,
+    title: "Bolodim",
+    category: "Game",
+    description: "Bolodim is a game designed for use in schools, where students learn financial organization concepts in a fun yet educational way. The game was developed in Unity and uses game mechanics to teach students how to manage resources, plan investments, and understand the value of money. I participated in versions 1.1, 2.1, and fixed bugs in some other versions.",
+    tags: ["Unity", "C#"]
   }
 ];
 
@@ -157,6 +177,13 @@ const projectsPt = [
     title: "PowerLoop",
     category: "Jogo",
     description: "PowerLoop foi um jogo desenvolvido para a GameJam CTRL ALT JAM, na qual participei como Programador e VoiceOver.",
+    tags: ["Unity", "C#"]
+  },
+  {
+    id: 5,
+    title: "Bolodim",
+    category: "Jogo",
+    description: "Bolodim é um jogo voltado para utilização em escolas, onde o aluno aprende conceitos de organização financeira de forma lúdica, mas pedagógica. O jogo foi desenvolvido em Unity e utiliza mecânicas de jogo para ensinar os alunos a gerenciar recursos, planejar investimentos e entender o valor do dinheiro. Participei das versões 1.1, 2.1, e corrigi bugs em algumas outras.",
     tags: ["Unity", "C#"]
   }
 ];
